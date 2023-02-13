@@ -126,12 +126,17 @@ int main()
 		
 		if (finishYet == 1)
 		{
-			std::cout << "X WON!\n";
+			std::cout << "X WON!" << std::endl;
 			return 0;
 		}
 		else if (finishYet == 2)
 		{
-			std::cout << "0 WON!\n";
+			std::cout << "0 WON!" << std::endl;
+			return 0;
+		}
+		else if (finishYet == 3)
+		{
+			std::cout << "Tie" << std::endl;
 			return 0;
 		}
 	}
@@ -411,13 +416,55 @@ int characterChoice()
 
 int finish(int boardMap[3][3])
 {
-	if (boardMap[0][0] == 1 && boardMap[0][1] == 1 && boardMap[0][2] == 1)
+	for (int i = 0; i < 3; ++i)
 	{
-		return true;
+
+		// I added this to check if the vertical lines are filled By X's like so 000
+		//																		 111 <- Sample line but it works in all rows 
+		//																		 000
+
+		if (boardMap[i][0] == 1 && boardMap[i][1] == 1 && boardMap[i][2] == 1)
+		{
+			return 1;
+		}
+
+		// Exactly the same idea but for 0's 
+
+		if (boardMap[i][0] == 2 && boardMap[i][1] == 2 && boardMap[i][2] == 2)
+		{
+			return 2;
+		}
+
+		// This defeneitly needs testing but in theory It will display "Tie" If all places are filled and noone has won yet :)
+
+		int nonEmptyCoutner{};
+
+		for (int height = 0; height < 3; ++height)
+		{
+			for (int width = 0; width < 3; ++width)
+			{
+				if (boardMap[height][width] != 0)
+				{
+					nonEmptyCoutner++;
+				}
+
+				if (nonEmptyCoutner == 9)
+				{
+					return 3;
+				}
+			}
+		}
 
 	}
-	return false;
+	return 777;
 }
+
+
+
+// finishYet returns 1 for char 1 winning aka X
+// finishYet returns 2 for char 0 winning aka 0
+// finishYet returns 3 for A tie 
+
 
 // Things to fix
 // I also need to add a system to check if anyone has won yet
