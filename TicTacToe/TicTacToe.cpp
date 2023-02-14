@@ -66,7 +66,7 @@ int main()
 	// Update the 2d array with according position and call Showmap to show
 	// The updated Map
 
-	for (int turn = 0; turn < 5; ++turn)
+	for (int turn = 0; turn < 777; ++turn)
 	{
 		int mark{};
 		int height{};
@@ -92,7 +92,13 @@ int main()
 				width = 0;
 			}
 
-			if (mark == checkMark && characterX == true)
+			if (mark == checkMark && boardMap[height][width] != 0)
+			{
+				std::cout << "Place isn't empty, you lose for trying to cheat!"
+					<< std::endl;
+				return 0;
+			}
+			else if (mark == checkMark && characterX == true)
 			{
 				boardMap[height][width] = 1;
 				std::cout << "Your move\n";
@@ -134,6 +140,12 @@ int main()
 			std::cout << "0 WON!\n";
 			return 0;
 		}
+		else if (finishYet == 4)
+		{
+			std::cout << "Tie!, no winners\n";
+			return 0;
+		}
+		
 	}
 	return 0;
 }
@@ -411,14 +423,100 @@ int characterChoice()
 
 int finish(int boardMap[3][3])
 {
-	if (boardMap[0][0] == 1 && boardMap[0][1] == 1 && boardMap[0][2] == 1)
-	{
-		return true;
+	// Check for vertical lines for wins
 
+	//
+	// XXX
+	//
+
+	for (int height = 0; height < 3; ++height)
+	{
+		if (boardMap[height][0] == 1 && boardMap[height][1] == 1
+			&& boardMap[height][2] == 1)
+		{
+			return 1;
+		}
+		else if (boardMap[height][0] == 2 && boardMap[height][1] == 2
+			&& boardMap[height][2] == 2)
+		{
+			return 2;
+		}
+	}
+
+	// Check for horizontal lines for wins
+
+	//  X
+	//  X
+	//  X
+
+	for (int width = 0; width < 3; ++width)
+	{
+		if (boardMap[0][width] == 1 && boardMap[1][width] == 1 &&
+			boardMap[2][width] == 1)
+		{
+			return 1;
+		}
+		else if (boardMap[0][width] == 2 && boardMap[1][width] == 2 &&
+			boardMap[2][width] == 2)
+		{
+			return 2;
+		}
+	}
+
+
+	// Check for right line
+ 
+	//   X
+	//  X
+	// X
+
+	if (boardMap[0][2] == 1 && boardMap[1][2] == 1 && boardMap[2][2] == 1)
+	{
+		return 1;
+	}
+	else if (boardMap[0][2] == 2 && boardMap[1][2] == 2 && boardMap[2][2] == 2)
+	{
+		return 2;
+	}
+
+
+	// Check for left line
+
+	// X
+	//  X
+	//   X
+
+	if (boardMap[0][0] == 1 && boardMap[1][1] == 1 && boardMap[2][2] == 1)
+	{
+		return 1;
+	}
+	else if (boardMap[0][0] == 2 && boardMap[1][1] == 2 && boardMap[2][2] == 2)
+	{
+		return 2;
+	}
+
+
+	// Check for tie
+	int tie{};
+
+	for (int hgt = 0; hgt < 3; ++hgt)
+	{
+		for (int wdt = 0; wdt < 3; ++wdt)
+		{
+			if (boardMap[hgt][wdt] == 1 || boardMap[hgt][wdt] == 2)
+			{
+				tie++;
+
+			}
+
+			if (tie == 9)
+			{
+				return 4;
+			}
+		}
 	}
 	return false;
 }
 
 // Things to fix
-// I also need to add a system to check if anyone has won yet
-// I need to make it so that the user can't place marks on places that are already filled
+// None it all works as intented :)
