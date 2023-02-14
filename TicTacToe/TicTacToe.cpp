@@ -1,5 +1,5 @@
-#include <iostream>
-#include <cstdlib>
+// I also need to add a system to check if anyone has won yet
+// I need to make it so that the user can't place marks on places that are already filled#include <cstdlib>
 #include <ctime>
 
 void showMap(int boardMap[][3]);
@@ -21,7 +21,7 @@ int main()
 	srand((unsigned int)time(0));
 
 	// Intro / welcome the user
-	
+
 	intro();
 
 	// Make the user choose a character
@@ -82,13 +82,13 @@ int main()
 
 			if (checkMark == 4)
 			{
-				height ++;
+				height++;
 				width = 0;
 			}
 
 			if (checkMark == 7)
 			{
-				height ++;
+				height++;
 				width = 0;
 			}
 
@@ -129,7 +129,7 @@ int main()
 
 		// Check if anyone has won yet
 		int finishYet = finish(boardMap);
-		
+
 		if (finishYet == 1)
 		{
 			std::cout << "X WON!\n";
@@ -145,7 +145,7 @@ int main()
 			std::cout << "Tie!, no winners\n";
 			return 0;
 		}
-		
+
 	}
 	return 0;
 }
@@ -210,7 +210,7 @@ void showMap(int boardMap[3][3])
 	{
 		zeroTwo = 'O';
 	}
-	
+
 	// End of the first row
 
 
@@ -465,7 +465,7 @@ int finish(int boardMap[3][3])
 
 
 	// Check for right line
- 
+
 	//   X
 	//  X
 	// X
