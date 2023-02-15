@@ -1,13 +1,23 @@
-#include "SDL.h"
-#include <iostream>
+#include "game.h"
+
+Game* game = nullptr;
 
 int main(int argc, char* argv[])
 {
-	while (game is running)
+	game = new Game();
+
+	game->init("BruhEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+		800, 600, true);
+
+	while (game->running())
 	{
-		gandle any user input
-		update
+		game->handleEvents();
+		game->update();
+		game->render();
+
 	}
+
+	game->clean();
 
 	return 0;
 }
