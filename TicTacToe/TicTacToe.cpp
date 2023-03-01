@@ -147,6 +147,10 @@ int main()
 		}
 
 	}
+	system("pause");
+	system("pause");
+	system("pause");
+
 	return 0;
 }
 
@@ -416,6 +420,7 @@ int characterChoice()
 	else
 	{
 		std::cout << "Bruh, you can't even choose a charater wtf\n";
+		system("pause");
 		return 3;
 	}
 
