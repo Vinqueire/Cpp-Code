@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\learnCppChapter4SummaryTexas.cpp">
+    <ClCompile Include="src\chernoCppSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
