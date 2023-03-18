@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{9c4b2bf0-9c78-4898-a469-b9b8c135601f}</ProjectGuid>
-    <RootNamespace>learnCpp56RelationalOperatorsAndFloatingPointComparisons</RootNamespace>
+    <ProjectGuid>{a78d70c1-6851-44a0-8844-df7ec5bff9d1}</ProjectGuid>
+    <RootNamespace>theChernoPointersCpp</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -135,7 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="learnCpp5.6RelationalOperatorsAndFloatingPointComparisons.cpp" />
+    <ClCompile Include="theChernoPointersCpp.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,20 +1,32 @@
-// learnCpp5.6RelationalOperatorsAndFloatingPointComparisons.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
+#include <algorithm>
+#include <cmath>
 #include <iostream>
+
+// return true if the difference between a and b is within epsilon percent of the larger of a and b
+bool approximatelyEqualRel(double a, double b, double relEpsilon)
+{
+    return (std::abs(a - b) <= (std::max(std::abs(a), std::abs(b)) * relEpsilon));
+}
+
+bool approximatelyEqualAbsRel(double a, double b, double absEpsilon, double relEpsilon)
+{
+    // Check if the numbers are really close -- needed when comparing numbers near zero.
+    double diff{ std::abs(a - b) };
+    if (diff <= absEpsilon)
+        return true;
+
+    // Otherwise fall back to Knuth's algorithm
+    return (diff <= (std::max(std::abs(a), std::abs(b)) * relEpsilon));
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    // a is really close to 1.0, but has rounding errors
+    double a{ 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 };
+
+    std::cout << approximatelyEqualRel(a, 1.0, 1e-8) << '\n';     // compare "almost 1.0" to 1.0
+    std::cout << approximatelyEqualRel(a - 1.0, 0.0, 1e-8) << '\n'; // compare "almost 0.0" to 0.0
+
+    std::cout << approximatelyEqualAbsRel(a, 1.0, 1e-12, 1e-8) << '\n'; // compare "almost 1.0" to 1.0
+    std::cout << approximatelyEqualAbsRel(a - 1.0, 0.0, 1e-12, 1e-8) << '\n'; // compare "almost 0.0" to 0.0
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
