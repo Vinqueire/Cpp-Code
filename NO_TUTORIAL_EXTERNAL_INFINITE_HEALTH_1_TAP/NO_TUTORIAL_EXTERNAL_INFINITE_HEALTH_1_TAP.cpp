@@ -15,7 +15,11 @@ int main()
 	std::cout << "Base adress is: 0x" << std::hex << baseAddr << std::dec << std::endl;
 
 	HANDLE hproc = OpenProcess(PROCESS_ALL_ACCESS, 0, procId);
+
 	std::vector<unsigned int> healthOffset = { 0xF8 };
+	std::vector<unsigned int> currentWeaponAmmoOffset = { 0x374, 0x14, 0x0 };
+
+
 	uintptr_t dynAddr = baseAddr + 0x10F4F4;
 	std::cout << "dynamicAddr is: 0x" << std::hex << dynAddr << std::dec << std::endl;
 
@@ -29,7 +33,7 @@ int main()
 	WriteProcessMemory(hproc, (BYTE*)healthAddress, &updatedHealth, sizeof(updatedHealth), 0);
 	std::cout << "Now your health is: " << updatedHealth << std::endl;
 
-
+	// Mission for tommorow, Make it so that you can have both InfiniteHealth, and Infinite Ammo, and make it togglable on and onn when pressing a key
 	system("pause");
 	return 0;
 }
