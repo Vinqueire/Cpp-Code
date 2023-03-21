@@ -18,6 +18,8 @@ int main()
 
 	std::vector<unsigned int> healthOffset = { 0xF8 };
 	std::vector<unsigned int> currentWeaponAmmoOffset = { 0x374, 0x14, 0x0 };
+	std::vector<unsigned int> recoil1Offset = { 0x374, 0xC, 0x120 };
+	std::vector<unsigned int> recoil2Offset = { 0x374, 0xC, 0x122 };
 
 
 	uintptr_t dynAddr = baseAddr + 0x10F4F4;
