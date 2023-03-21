@@ -1,50 +1,88 @@
 #include "pch.h"
 #include "proc.h"
+#include "mem.h"
 
 int main()
 {
-	DWORD procId = getProcId(L"ac_client.exe");
-	uintptr_t modAddress = getModuleBaseAddress(procId, L"ac_client.exe");
-	
-	HANDLE hProc = OpenProcess(PROCESS_ALL_ACCESS, 0, procId);
-	
-	uintptr_t dynamicAddress = modAddress + 0x10F4F4;
+	HANDLE hProcess = 0;
+	uintptr_t modBase = 0, localPlayerPtr = 0, healthAddress = 0;
+	bool bHealth = false, bAmmo = false, bRecoil = false;
 
-	if (procId == 1 || modAddress == 1)
+	const int newValue = 1337;
+
+	DWORD procId = getProcId(L"ac_client.exe");
+
+	if (procId)
 	{
-		std::cout << "Your game probably isn't open :)\n";
+		hProcess = OpenProcess(PROCESS_ALL_ACCESS, 0, procId);
+		modBase = getModuleBaseAddress(procId, L"ac_client.exe");
+		localPlayerPtr = modBase + 0x10F4F4;
+
+		healthAddress = findDMAAddy(hProcess, localPlayerPtr, { 0xF8 });
+
+	}
+	else
+	{
+		std::cout << "Process not found, press enter to exit\n";
+		getchar();
 		return 1;
 	}
 
-	std::vector<unsigned int> healthOffset = { 0xF8 };
-	std::vector<unsigned int> ammoOffset = { 0x374, 0x14, 0x0 };
+	DWORD dwExit = 0;
 
-	uintptr_t healthAdress = findDMAAddy(hProc, dynamicAddress, healthOffset);
-	uintptr_t ammoAdress = findDMAAddy(hProc, dynamicAddress, ammoOffset);
+	while (GetExitCodeProcess(hProcess, &dwExit) && dwExit == STILL_ACTIVE)
+	{
+		if (GetAsyncKeyState(VK_NUMPAD1) & 1)
+		{
+			bHealth = !bHealth;
+		}
 
-	int currentHealth = 0;
-	ReadProcessMemory(hProc, (BYTE*)healthAdress, &currentHealth, sizeof(currentHealth), 0);
-	std::cout << "Your currentHealth is: " << currentHealth << std::endl;
+		if (GetAsyncKeyState(VK_NUMPAD2) & 1)
+		{
+			bAmmo = !bAmmo;
 
-	int currentAmmo = 0;
-	ReadProcessMemory(hProc, (BYTE*)ammoAdress, &currentAmmo, sizeof(currentAmmo), 0);
-	std::cout << "Your currentAmmo is: " << currentAmmo << std::endl << std::endl;
+			if (bAmmo)
+			{
+				// ff06 == inc [esi]
+				mem::patchEx((BYTE*)(modBase + 0x637e9), (BYTE*)"\xFF\x06", 2, hProcess);
+			}
+			else
+			{
+				// ff0E == dec [esi]
+				mem::patchEx((BYTE*)(modBase + 0x637e9), (BYTE*)"\xFF\x0E", 2, hProcess);
+			}
+		}
 
-	int updatedHealth = 1337;
-	int updatedAmmo = 777;
+		if (GetAsyncKeyState(VK_NUMPAD3) & 1)
+		{
+			bRecoil = !bRecoil;
 
-	WriteProcessMemory(hProc, (BYTE*)healthAdress, &updatedHealth, sizeof(updatedHealth), 0);
-	WriteProcessMemory(hProc, (BYTE*)ammoAdress, &updatedAmmo, sizeof(updatedAmmo), 0);
+			if (bRecoil)
+			{
+				mem::nopEx((BYTE*)(modBase + 0x63786), 10, hProcess);
+			}
+			else
+			{
+				mem::patchEx((BYTE*)(modBase + 0x63786), (BYTE*)"\x50\x8d\x4c\x24\x1c\x51\x8b\xce\xff\xd2", 10, hProcess);
+			}
+		}
 
-	
+		if (GetAsyncKeyState(VK_INSERT) & 1)
+		{
+			return 0;
+		}
 
-	ReadProcessMemory(hProc, (BYTE*)healthAdress, &currentHealth, sizeof(currentHealth), 0);
-	std::cout << "Your Health is now set to: " << currentHealth << std::endl;
+		// Continous write or freeze
+		if (bHealth)
+		{
+			mem::patchEx((BYTE*)healthAddress, (BYTE*)&newValue, sizeof(newValue), hProcess);
+		}
 
-	ReadProcessMemory(hProc, (BYTE*)ammoAdress, &currentAmmo, sizeof(currentAmmo), 0);
-	std::cout << "Your Ammo is now set to: " << currentAmmo << std::endl << std::endl;
+		Sleep(10);
+	}
 
+	std::cout << "Process not found, press enter to exit\n";
 
-	system("pause");
+	getchar();
 	return 0;
 }
