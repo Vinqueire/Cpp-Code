@@ -19,7 +19,6 @@ int main()
 		localPlayerPtr = modBase + 0x10F4F4;
 
 		healthAddress = findDMAAddy(hProcess, localPlayerPtr, { 0xF8 });
-
 	}
 	else
 	{
@@ -29,23 +28,17 @@ int main()
 	}
 
 	DWORD dwExit = 0;
-	bool healthOn = false, ammoOn = false, recoilOn = false;
 
-	
 	while (GetExitCodeProcess(hProcess, &dwExit) && dwExit == STILL_ACTIVE)
 	{
 		if (GetAsyncKeyState(VK_NUMPAD1) & 1)
 		{
 			bHealth = !bHealth;
-			healthOn = !healthOn;
-			std::cout << "Health cheat is: \t -> " << (healthOn ? "ON" : "OFF") << " <-" << std::endl;
 		}
 
 		if (GetAsyncKeyState(VK_NUMPAD2) & 1)
 		{
 			bAmmo = !bAmmo;
-			ammoOn = !ammoOn;
-			std::cout << "Ammo cheat is: \t -> " << (ammoOn ? "ON" : "OFF") << " <-" << std::endl;
 
 			if (bAmmo)
 			{
@@ -62,8 +55,6 @@ int main()
 		if (GetAsyncKeyState(VK_NUMPAD3) & 1)
 		{
 			bRecoil = !bRecoil;
-			recoilOn = !recoilOn;
-			std::cout << "Recoil cheat is: \t -> " << (recoilOn ? "ON" : "OFF") << " <-" << std::endl;
 
 			if (bRecoil)
 			{
@@ -86,10 +77,10 @@ int main()
 			mem::patchEx((BYTE*)healthAddress, (BYTE*)&newValue, sizeof(newValue), hProcess);
 		}
 
-		Sleep(50);
+		Sleep(10);
 	}
-	
-	std::cout << "\nProcess not found, press enter to exit\n";
+
+	std::cout << "Process not found, press enter to exit\n";
 
 	getchar();
 	return 0;
