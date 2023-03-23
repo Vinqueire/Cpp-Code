@@ -27,8 +27,8 @@ int main()
 	std::cout << std::setw(70) << "Jourvence Mod Menu\n\n";
 	std::cout << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 	std::cout << std::setw(75) << "To Activate Godmode Press Numpad1\n"; 
-	std::cout << std::setw(77) << "To Activate Ammo Cheat Press Numpad1\n";
-	std::cout << std::setw(80) << "To Activate Recoil Cheat Press Numpad1\n\n\n";
+	std::cout << std::setw(77) << "To Activate Ammo Cheat Press Numpad2\n";
+	std::cout << std::setw(80) << "To Activate Recoil Cheat Press Numpad3\n\n\n";
 	std::cout << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 
 	
@@ -91,8 +91,8 @@ int main()
 				std::cout << std::setw(70) << "Jourvence Mod Menu\n\n";
 				std::cout << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 				std::cout << std::setw(75) << "To Activate Godmode Press Numpad1\n";
-				std::cout << std::setw(77) << "To Activate Ammo Cheat Press Numpad1\n";
-				std::cout << std::setw(80) << "To Activate Recoil Cheat Press Numpad1\n\n\n";
+				std::cout << std::setw(77) << "To Activate Ammo Cheat Press Numpad2\n";
+				std::cout << std::setw(80) << "To Activate Recoil Cheat Press Numpad3\n\n\n";
 
 
 				int depth = 68;
