@@ -30,7 +30,6 @@ DWORD getProcId(const wchar_t* procName)
 	CloseHandle(snapshot);
 	if (procId == 0)
 	{
-		std::cout << "getProcId procId is 0\n";
 		return 1;
 	}
 	return procId;
@@ -43,7 +42,6 @@ uintptr_t getModuleBaseAddress(DWORD procId, const wchar_t* modName)
 
 	if (modSnap == INVALID_HANDLE_VALUE)
 	{
-		std::cout << "getModuleBaseAddress modSnap has invalid value\n";
 		return 1;
 	}
 
@@ -65,7 +63,6 @@ uintptr_t getModuleBaseAddress(DWORD procId, const wchar_t* modName)
 	CloseHandle(modSnap);
 	if (modAddr == 0)
 	{
-		std::cout << "getModuleBaseAddress modAddr has value 0\n";
 		return 1;
 	}
 	return modAddr;
